@@ -1,4 +1,3 @@
-from ignite.handlers import ModelCheckpoint
 from torch.utils.data import DataLoader
 from data.audio_dataset import AudioDataset
 from ignite.engine import create_supervised_trainer, Events
@@ -6,7 +5,7 @@ from torch import optim
 
 from nets.MockLoss import MockLoss
 from nets.mock_net import MockNet
-from runners.adding_handler_utils import adding_training_functions
+from runners.adding_handler_utils import adding_training_functions, adding_weight_save_handler, adding_lr_decay_handler
 
 
 def build_dataloader(dir_paths):
@@ -17,21 +16,23 @@ def build_dataloader(dir_paths):
                       num_workers=4)
 
 
-def build_optimizer(net_param):
-    learning_rate = 1e-4
+def build_optimizer(net_param, model_config_parameters):
+    learning_rate = model_config_parameters['lr']
+    momentum = model_config_parameters['momentum']
+
     return optim.SGD(
         params=net_param,
         lr=learning_rate,
-        momentum=0.9,
+        momentum=momentum
     )
 
 
-def build_basic_ignite_trainer():
+def build_basic_ignite_trainer(net_config_parameters):
+
     model = MockNet()
-    net_param = model.parameters()
-    optimizer = build_optimizer(net_param)
-    scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.95)
+    optimizer = build_optimizer(model.parameters(), net_config_parameters['model_parametr'])
     loss = MockLoss()
+
     trainer = create_supervised_trainer(
         model=model,
         optimizer=optimizer,
@@ -39,17 +40,14 @@ def build_basic_ignite_trainer():
         device='cpu'
     )
 
-    weight_dir = r'C:\Users\Eyal\Desktop\eyal\python\weights\karaoke'
-    handler = ModelCheckpoint(weight_dir,
-                              'myprefix',
-                              save_interval=1000,
-                              create_dir=True)
-    trainer.add_event_handler(Events.EPOCH_COMPLETED, handler, {'mymodel': model})
+    adding_weight_save_handler(model, trainer, net_config_parameters['weights_saving_parameter'])
 
-    return trainer, optimizer
+    adding_lr_decay_handler(optimizer, trainer, net_config_parameters['model_parametr'])
+
+    return trainer
 
 
-def build_trainer():
-    trainer, optimizer = build_basic_ignite_trainer()
-    adding_training_functions(trainer,optimizer)
+def build_trainer(net_parameters):
+    trainer = build_basic_ignite_trainer(net_parameters)
+    adding_training_functions(trainer)
     return trainer
