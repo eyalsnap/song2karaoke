@@ -36,8 +36,12 @@ def adding_weight_save_handler(model, trainer, weight_save_config_parameters):
     saving_frequecy = weight_save_config_parameters['save_frequency']
     saving_name = weight_save_config_parameters['save_name']
     saving_prefix = weight_save_config_parameters['save_name_prefix']
+    num_of_files_to_save = weight_save_config_parameters['num_of_files_to_save']
+
     handler = ModelCheckpoint(weight_dir,
                               saving_prefix,
                               save_interval=saving_frequecy,
-                              create_dir=True)
+                              n_saved=num_of_files_to_save,
+                              create_dir=True,
+                              require_empty=False)
     trainer.add_event_handler(Events.EPOCH_COMPLETED, handler, {saving_name: model})

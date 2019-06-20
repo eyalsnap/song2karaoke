@@ -11,9 +11,10 @@ net_parameters = {
     },
     'weights_saving_parameter': {
         'path': r'C:\Users\Eyal\Desktop\eyal\python\weights\karaoke',
-        'save_frequency': 1000,
-        'num_of_files_to_save': 2,
+        'save_frequency': 2,
+        'num_of_files_to_save': 3,
         'save_name': 'MockNet',
-        'save_name_prefix': 'weights'
+        'save_name_prefix': 'weights',
+        'should_load': True
     }
 }

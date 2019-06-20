@@ -4,7 +4,7 @@ from runners.training_object_builder_util import build_dataloader, build_trainer
 
 def main():
     dir_paths = [
-        r'C:\Users\Eyal\Desktop\eyal\python\data\sample_data\sample_data\_nopr_slman__am_ate_shoma_',
+        # r'C:\Users\Eyal\Desktop\eyal\python\data\sample_data\sample_data\_nopr_slman__am_ate_shoma_',
         r'C:\Users\Eyal\Desktop\eyal\python\data\sample_data\sample_data\_aiti_loi__zz_btirof_'
     ]# * 10
 

@@ -1,3 +1,6 @@
+import os
+
+import torch
 from torch.utils.data import DataLoader
 from data.audio_dataset import AudioDataset
 from ignite.engine import create_supervised_trainer, Events
@@ -29,7 +32,7 @@ def build_optimizer(net_param, model_config_parameters):
 
 def build_basic_ignite_trainer(net_config_parameters):
 
-    model = MockNet()
+    model = build_net(net_config_parameters['weights_saving_parameter'])
     optimizer = build_optimizer(model.parameters(), net_config_parameters['model_parametr'])
     loss = MockLoss()
 
@@ -45,6 +48,19 @@ def build_basic_ignite_trainer(net_config_parameters):
     adding_lr_decay_handler(optimizer, trainer, net_config_parameters['model_parametr'])
 
     return trainer
+
+
+def build_net(weight_parameters):
+
+    model = MockNet()
+    if not weight_parameters['should_load']:
+        return model
+
+    file_name = os.listdir(weight_parameters['path'])[-1]
+    weight_path = os.path.join(weight_parameters['path'], file_name)
+    model.load_state_dict(torch.load(weight_path))
+    print(f'loading weights from file {file_name}')
+    return model
 
 
 def build_trainer(net_parameters):
