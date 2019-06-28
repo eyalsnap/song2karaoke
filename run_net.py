@@ -1,4 +1,4 @@
-from configs.net_config import net_parameters
+from configs.colab_config import net_parameters
 from runners.training_object_builder_util import build_dataloader, build_trainer
 
 
