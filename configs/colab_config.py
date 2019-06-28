@@ -7,7 +7,7 @@ net_parameters = {
         'lr': 5e-4,
         'lr_decay': 0.1,
         'lr_decay_epoch_frequency': 3,
-        'device': 'gpu',
+        'device': 'cuda',
         'momentum': 0.9
     },
     'weights_saving_parameter': {
