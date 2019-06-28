@@ -1,6 +1,7 @@
 net_parameters = {
     'data_parameter': {
         'batch_size': 1,
+        'device': 'gpu',
         'num_of_workers': 4
     },
     'model_parametr': {
