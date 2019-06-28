@@ -40,7 +40,7 @@ def build_basic_ignite_trainer(net_config_parameters):
         model=model,
         optimizer=optimizer,
         loss_fn=loss,
-        device=net_config_parameters['device']
+        device=net_config_parameters['model_parametr']['device']
     )
 
     adding_weight_save_handler(model, trainer, net_config_parameters['weights_saving_parameter'])

@@ -1,13 +1,13 @@
 net_parameters = {
     'data_parameter': {
         'batch_size': 1,
-        'device': 'gpu',
         'num_of_workers': 4
     },
     'model_parametr': {
         'lr': 5e-4,
         'lr_decay': 0.1,
         'lr_decay_epoch_frequency': 3,
+        'device': 'gpu',
         'momentum': 0.9
     },
     'weights_saving_parameter': {
