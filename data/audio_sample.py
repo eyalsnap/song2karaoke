@@ -14,8 +14,6 @@ class AudioSample:
     def get_audio_data(self):
         _, song = wavfile.read(self.song_path)
         _, prediction = wavfile.read(self.song_path)
-        song = song[::4]
-        prediction = prediction[::4]
         song = song.T
         prediction = prediction.T
         song = song.astype(np.float32)
