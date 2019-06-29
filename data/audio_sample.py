@@ -8,8 +8,8 @@ class AudioSample:
 
     def __init__(self, path):
 
-        self.song_path = os.path.join(path, 'aligned_song.wav')
-        self.karaoke_path = os.path.join(path, 'aligned_karaoke.wav')
+        self.song_path = os.path.join(path, 'aligned_song_5_second.wav')
+        self.karaoke_path = os.path.join(path, 'aligned_karaoke_5_second.wav')
 
     def get_audio_data(self):
         _, song = wavfile.read(self.song_path)
