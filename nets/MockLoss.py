@@ -26,7 +26,7 @@ class MockLoss(torch.nn.Module):
             os.remove(save_path)
 
         fs = 44100
-        data = y2.numpy()
+        data = y2.cpu().numpy()
         wavfile.write(save_path, fs, data)
 
         return torch.mean(t)
