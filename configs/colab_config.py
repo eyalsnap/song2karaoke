@@ -4,7 +4,7 @@ net_parameters = {
         'num_of_workers': 4
     },
     'model_parametr': {
-        'lr': 5e-4,
+        'lr': 2e-4,
         'lr_decay': 0.1,
         'lr_decay_epoch_frequency': 3,
         'device': 'cuda',

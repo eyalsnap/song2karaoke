@@ -1,4 +1,7 @@
+import os
+
 import torch
+from scipy.io import wavfile
 
 
 class MockLoss(torch.nn.Module):
@@ -16,4 +19,14 @@ class MockLoss(torch.nn.Module):
         well as arbitrary operators on Tensors.
         """
         t = torch.abs(y1 - y2).float()
+
+        save_path = r'output/output1.wav'
+        # save_path = r'C:\Users\Eyal\Desktop\eyal\python\data\sample_data\sample_data\_nopr_slman__am_ate_shoma_\net_output.wav'
+        if os.path.exists(save_path):
+            os.remove(save_path)
+
+        fs = 44100
+        data = y2.cpu().numpy()
+        wavfile.write(save_path, fs, data)
+
         return torch.mean(t)
